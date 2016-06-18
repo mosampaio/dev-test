@@ -3,6 +3,12 @@ package domain.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.lang.String.format;
+import static java.util.Arrays.asList;
+
 public final class Position {
     private final Long id;
     private final String name;
@@ -17,6 +23,26 @@ public final class Position {
         this.name = name;
         this.type = type;
         this.geoPosition = geoPosition;
+    }
+
+    public String toCSV() {
+        return csvFieldValues().stream()
+                .map(s -> format("\"%s\"", s))
+                .collect(Collectors.joining(","));
+    }
+
+    private List<String> csvFieldValues() {
+        return asList(id.toString(), name, type,
+                geoPosition.getLatitude().toString(), geoPosition.getLongitude().toString());
+    }
+
+    @JsonCreator
+    public static Position jsonCreator(
+            @JsonProperty("_id") final Long id,
+            @JsonProperty("name") final String name,
+            @JsonProperty("type") final String type,
+            @JsonProperty("geo_position") final GeoPosition geoPosition) {
+        return new Position(id, name, type, geoPosition);
     }
 
     public Long getId() {
@@ -71,12 +97,4 @@ public final class Position {
                 '}';
     }
 
-    @JsonCreator
-    public static Position jsonCreator(
-            @JsonProperty("_id") final Long id,
-            @JsonProperty("name") final String name,
-            @JsonProperty("type") final String type,
-            @JsonProperty("geo_position") final GeoPosition geoPosition) {
-        return new Position(id, name, type, geoPosition);
-    }
 }
