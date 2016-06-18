@@ -3,6 +3,10 @@ package domain.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.stream.Stream;
+
+import static java.util.Arrays.asList;
+
 public final class GeoPosition {
     private final Double latitude;
     private final Double longitude;
@@ -17,6 +21,10 @@ public final class GeoPosition {
             @JsonProperty("latitude") final Double latitude,
             @JsonProperty("longitude") final Double longitude) {
         return new GeoPosition(latitude, longitude);
+    }
+
+    Stream<String> fieldValues() {
+        return asList(latitude.toString(), longitude.toString()).stream();
     }
 
     public Double getLatitude() {

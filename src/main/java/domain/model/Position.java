@@ -3,8 +3,8 @@ package domain.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
@@ -26,14 +26,13 @@ public final class Position {
     }
 
     public String toCSV() {
-        return csvFieldValues().stream()
+        return fieldValues()
                 .map(s -> format("\"%s\"", s))
                 .collect(Collectors.joining(","));
     }
 
-    private List<String> csvFieldValues() {
-        return asList(id.toString(), name, type,
-                geoPosition.getLatitude().toString(), geoPosition.getLongitude().toString());
+    Stream<String> fieldValues() {
+        return Stream.concat(asList(id.toString(), name, type).stream(), geoPosition.fieldValues());
     }
 
     @JsonCreator
