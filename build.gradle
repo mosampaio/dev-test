@@ -1,4 +1,16 @@
-apply plugin: 'java'
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '1.2.3'
+}
+
+mainClassName = 'application.ConsoleApp'
+
+shadowJar {
+    baseName = 'GoEuroTest'
+    classifier = null
+    version = null
+}
 
 repositories {
     mavenCentral()
@@ -7,6 +19,9 @@ repositories {
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.21'
     compile 'org.slf4j:slf4j-simple:1.7.21'
+
+    compile 'com.google.inject:guice:4.1.0'
+
 
     compile 'com.fasterxml.jackson.core:jackson-databind:2.7.4'
     compile 'com.netflix.feign:feign-core:8.17.0'
