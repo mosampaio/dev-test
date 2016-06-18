@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 import static java.lang.String.format;
+import static java.lang.System.lineSeparator;
 import static java.lang.System.nanoTime;
 import static java.nio.file.Files.write;
 import static java.nio.file.Paths.get;
@@ -32,7 +33,7 @@ public class SearchService {
             final String content = this.positionRepository.search(cityName)
                     .stream()
                     .map(Position::toCSV)
-                    .collect(joining("\n"));
+                    .collect(joining(lineSeparator()));
 
             return write(
                     get(file),
