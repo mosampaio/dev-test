@@ -4,51 +4,43 @@ import com.github.tomakehurst.wiremock.common.Slf4jNotifier;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import domain.model.GeoPosition;
 import domain.model.Position;
-import feign.Feign;
-import feign.jackson.JacksonDecoder;
-import feign.jackson.JacksonEncoder;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.nio.file.Paths;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
-import static java.nio.file.Files.readAllLines;
+import static helper.TestHelper.buildGoEuroRestClient;
+import static helper.TestHelper.content;
+import static helper.TestHelper.pathFromResource;
 import static java.util.Arrays.asList;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class GoEuroRestClientTest {
 
+    private static final int PORT = 8089;
+
     @Rule
     public WireMockRule wireMockRule = new WireMockRule(
-            wireMockConfig().port(8089).notifier(new Slf4jNotifier(false)));
-
+            wireMockConfig().port(PORT).notifier(new Slf4jNotifier(false)));
     @Test
     public void itShouldReturnListOfPositionsWhenISearch()
             throws Exception {
         //given
-        String expectedResponseBody = readAllLines(
-                Paths.get(getClass().getResource("/berlin_search.json").toURI())
-        ).stream().collect(Collectors.joining());
+        String stubbedResponseBody = content(pathFromResource("/berlin_search.json"));
 
         stubFor(get(urlEqualTo("/api/v2/position/suggest/en/berlin"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json")
-                        .withBody(expectedResponseBody)));
+                        .withBody(stubbedResponseBody)));
 
-        GoEuroRestClient goEuroRestClient = Feign.builder()
-                .encoder(new JacksonEncoder())
-                .decoder(new JacksonDecoder())
-                .target(GoEuroRestClient.class, "http://localhost:8089");
-
+        GoEuroRestClient goEuroRestClient = buildGoEuroRestClient(PORT);
 
         List<Position> positions = goEuroRestClient.search("berlin");
 

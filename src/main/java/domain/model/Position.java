@@ -3,11 +3,11 @@ package domain.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.joining;
 
 public final class Position {
     private final Long id;
@@ -28,7 +28,7 @@ public final class Position {
     public String toCSV() {
         return fieldValues()
                 .map(s -> format("\"%s\"", s))
-                .collect(Collectors.joining(","));
+                .collect(joining(","));
     }
 
     Stream<String> fieldValues() {

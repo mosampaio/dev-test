@@ -8,7 +8,6 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.21'
     compile 'org.slf4j:slf4j-simple:1.7.21'
 
-    compile 'com.google.guava:guava:19.0'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.7.4'
     compile 'com.netflix.feign:feign-core:8.17.0'
     compile 'com.netflix.feign:feign-jackson:8.17.0'
