@@ -1,7 +1,11 @@
 package application.service;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
-import infrastructure.repositories.PositionRestClient;
+import domain.repository.PositionRepository;
+import feign.Feign;
+import feign.jackson.JacksonDecoder;
+import feign.jackson.JacksonEncoder;
+import infrastructure.repositories.GoEuroRestClient;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
@@ -35,15 +39,19 @@ public class SearchServiceTest {
         ).stream().collect(Collectors.joining());
 
         stubFor(get(urlEqualTo("/api/v2/position/suggest/en/Berlin"))
-                .withHeader("Accept", equalTo("application/json"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json")
                         .withBody(expectedResponseBody)));
 
+        PositionRepository positionRepository = Feign.builder()
+                .encoder(new JacksonEncoder())
+                .decoder(new JacksonDecoder())
+                .target(GoEuroRestClient.class, "http://localhost:8089");
+
         SearchService searchService = new SearchService(
                 com.google.common.io.Files.createTempDir(),
-                new PositionRestClient());
+                positionRepository);
 
         //when
         File generatedFile = searchService.search("berlin");
