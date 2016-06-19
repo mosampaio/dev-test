@@ -28,13 +28,13 @@ public class GoEuroModule extends AbstractModule {
 
     @Provides
     public SearchService searchService(
-            @Named("outputDirectory") Path outputDirectory,
-            PositionRepository positionRepository) {
+            @Named("outputDirectory") final Path outputDirectory,
+            final PositionRepository positionRepository) {
         return new SearchService(outputDirectory, positionRepository);
     }
 
     @Provides
-    public PositionRepository positionRepository(@Named("host") String host) {
+    public PositionRepository positionRepository(@Named("host") final String host) {
         return Feign.builder()
                 .encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())

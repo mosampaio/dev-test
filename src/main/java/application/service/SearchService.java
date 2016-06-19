@@ -2,6 +2,7 @@ package application.service;
 
 import domain.model.Position;
 import domain.repository.PositionRepository;
+import org.slf4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,15 +14,16 @@ import static java.lang.System.nanoTime;
 import static java.nio.file.Files.write;
 import static java.nio.file.Paths.get;
 import static java.util.stream.Collectors.joining;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class SearchService {
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SearchService.class);
+    private static final Logger LOG = getLogger(SearchService.class);
 
     private final Path outputDirectory;
     private final PositionRepository positionRepository;
 
-    public SearchService(Path outputDirectory, PositionRepository positionRepository) {
+    public SearchService(final Path outputDirectory, final PositionRepository positionRepository) {
         this.outputDirectory = outputDirectory;
         this.positionRepository = positionRepository;
     }
@@ -39,7 +41,7 @@ public class SearchService {
                     get(file),
                     content.getBytes());
         } catch (IOException e) {
-            log.error("Error on file generation: {}", e.getMessage(), e);
+            LOG.error("Error on file generation: {}", e.getMessage(), e);
             throw new RuntimeException(e);
         }
     }

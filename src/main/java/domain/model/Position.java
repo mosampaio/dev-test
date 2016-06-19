@@ -44,24 +44,8 @@ public final class Position {
         return new Position(id, name, type, geoPosition);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public GeoPosition getGeoPosition() {
-        return geoPosition;
-    }
-
-    public String getType() {
-        return type;
-    }
-
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 

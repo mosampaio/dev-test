@@ -9,11 +9,13 @@ import java.nio.file.Path;
 
 import static java.lang.String.format;
 
-public class ConsoleApp {
+public final class ConsoleApp {
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SearchService.class);
+    public static void main(final String[] args) {
+        new ConsoleApp().run(args);
+    }
 
-    public static void main(String[] args) {
+    public void run(final String[] args) {
         if (args.length == 0) {
             System.out.println("Error: An argument must be passed.");
             System.exit(-1);
