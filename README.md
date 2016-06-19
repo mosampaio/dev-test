@@ -7,15 +7,21 @@ Java Developer Test
 
 [Java 8](http://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html)
 
+## How to run the tests
+
+```bash
+./gradlew test
+```
+
 ## How to generate the fat jar
 
 ```bash
 ./gradlew shadowJar
 ```
 
-It generates the far jar under `{project_path}/build/libs/`.
+It generates the it under `{project_path}/build/libs/`.
 
-## How to run it
+## How to run the fat jar
 
 ```bash
 java -jar GoEuroTest.jar "CITY_NAME"
