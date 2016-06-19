@@ -13,13 +13,15 @@ Java Developer Test
 ./gradlew shadowJar
 ```
 
+It generates the far jar under `{project_path}/build/libs/`.
+
 ## How to run it
 
 ```bash
 java -jar GoEuroTest.jar "CITY_NAME"
 ```
 
-After it runs, it should print the generated file path.
+It should print the generated file path.
 
 ### FAQ
 
