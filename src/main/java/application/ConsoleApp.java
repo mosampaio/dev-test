@@ -1,6 +1,6 @@
 package application;
 
-import application.service.SearchService;
+import application.service.ExportPositions;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import infrastructure.guice.GoEuroModule;
@@ -26,12 +26,12 @@ public final class ConsoleApp {
         }
 
         Injector injector = Guice.createInjector(new GoEuroModule());
-        SearchService searchService = injector.getInstance(SearchService.class);
+        ExportPositions exportPositions = injector.getInstance(ExportPositions.class);
 
         String cityName = args[0];
         LOG.info(format("Searching by %s", cityName));
         try {
-            Path result = searchService.search(cityName);
+            Path result = exportPositions.search(cityName);
             LOG.info(format("Search executed successfully. Check it out at %s", result));
         } catch (Exception e) {
             LOG.warn(format("Error occurred: %s", e.getMessage()));

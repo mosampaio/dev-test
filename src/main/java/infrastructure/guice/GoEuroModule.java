@@ -1,6 +1,6 @@
 package infrastructure.guice;
 
-import application.service.SearchService;
+import application.service.ExportPositions;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
@@ -37,10 +37,10 @@ public class GoEuroModule extends AbstractModule {
     }
 
     @Provides
-    public SearchService searchService(
+    public ExportPositions exportPositions(
             @Named(OUTPUT_DIRECTORY) final Path outputDirectory,
             final PositionRepository positionRepository) {
-        return new SearchService(outputDirectory, positionRepository);
+        return new ExportPositions(outputDirectory, positionRepository);
     }
 
     @Provides

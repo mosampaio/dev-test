@@ -21,7 +21,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-public class SearchServiceTest {
+public class ExportPositionsTest {
 
     private static final int PORT = 8089;
 
@@ -43,12 +43,12 @@ public class SearchServiceTest {
 
         PositionRepository positionRepository = buildGoEuroRestClient(PORT);
 
-        SearchService searchService = new SearchService(
+        ExportPositions exportPositions = new ExportPositions(
                 Paths.get(System.getProperty("java.io.tmpdir")),
                 positionRepository);
 
         //when
-        Path generatedFile = searchService.search("berlin");
+        Path generatedFile = exportPositions.search("berlin");
 
         //then
         assertThat(generatedFile, is(notNullValue()));
