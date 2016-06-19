@@ -7,12 +7,12 @@ import org.slf4j.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static java.lang.String.format;
 import static java.lang.System.lineSeparator;
 import static java.lang.System.nanoTime;
 import static java.nio.file.Files.write;
-import static java.nio.file.Paths.get;
 import static java.util.stream.Collectors.joining;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -37,9 +37,7 @@ public class SearchService {
                     .map(Position::toCSV)
                     .collect(joining(lineSeparator()));
 
-            return write(
-                    get(file),
-                    content.getBytes());
+            return write(Paths.get(file), content.getBytes());
         } catch (IOException e) {
             LOG.error("Error on file generation: {}", e.getMessage(), e);
             throw new RuntimeException(e);
