@@ -3,6 +3,8 @@ Java Developer Test
 
 [![Build Status](https://travis-ci.org/TwilioDevEd/sms2fa-servlets.svg?branch=master)](https://travis-ci.org/TwilioDevEd/sms2fa-servlets)
 
+[Click here](https://drive.google.com/open?id=0B8RI-Hq2cst5QkUwczJNOHZGakk) to download the fat jar file!
+
 ## Requirements
 
 [Java 8](http://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html)
